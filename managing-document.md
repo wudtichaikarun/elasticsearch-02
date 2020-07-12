@@ -1,5 +1,15 @@
 # Managing Documents
 
+- basic
+- script
+- upsert
+- replacing documents
+- delete document
+
+---
+
+## basic
+
 ```
 // create index pages
 PUT /pages
@@ -55,72 +65,86 @@ POST /products/_update/100
 }
 ```
 
-> script test subtracted "in_stock" before run script "in_stock" : 3 after "in_stock" : 2
+---
 
-before run script
+## script
 
-```
-// command
-GET /products/_doc/100
+- subtracted value
+- change value
+- change value use params
 
-// result
-{
-  "_index" : "products",
-  "_type" : "_doc",
-  "_id" : "100",
-  "_version" : 4,
-  "_seq_no" : 3,
-  "_primary_term" : 1,
-  "found" : true,
-  "_source" : {
-    "name" : "Toaster",
-    "price" : 49,
-    "in_stock" : 3,
-    "tags" : [
-      "electronics"
-    ]
-  }
-}
+### subtracted value
 
-```
+    > script test subtracted "in_stock" before run script "in_stock" : 3 after "in_stock" : 2
 
-run script
+    before run script
 
-```
-POST /products/_update/100
-{
-  "script": {
-    "source": "ctx._source.in_stock--"
-  }
-}
-```
+    ```
+    // command
+    GET /products/_doc/100
 
-after fun script
+    // result
+    {
+    "_index" : "products",
+    "_type" : "_doc",
+    "_id" : "100",
+    "_version" : 4,
+    "_seq_no" : 3,
+    "_primary_term" : 1,
+    "found" : true,
+    "_source" : {
+        "name" : "Toaster",
+        "price" : 49,
+        "in_stock" : 3,
+        "tags" : [
+        "electronics"
+        ]
+    }
+    }
 
-```
-// command
-GET /products/_doc/100
+    ```
 
-// result
-{
-  "_index" : "products",
-  "_type" : "_doc",
-  "_id" : "100",
-  "_version" : 5,
-  "_seq_no" : 4,
-  "_primary_term" : 1,
-  "found" : true,
-  "_source" : {
-    "name" : "Toaster",
-    "price" : 49,
-    "in_stock" : 2,
-    "tags" : [
-      "electronics"
-    ]
-  }
-}
+    run script
 
-```
+    ```
+    POST /products/_update/100
+    {
+    "script": {
+        "source": "ctx._source.in_stock--"
+    }
+    }
+    ```
+
+    after run script
+
+    ```
+    // command
+    GET /products/_doc/100
+
+    // result
+    {
+    "_index" : "products",
+    "_type" : "_doc",
+    "_id" : "100",
+    "_version" : 5,
+    "_seq_no" : 4,
+    "_primary_term" : 1,
+    "found" : true,
+    "_source" : {
+        "name" : "Toaster",
+        "price" : 49,
+        "in_stock" : 2,
+        "tags" : [
+        "electronics"
+        ]
+    }
+    }
+
+    ```
+
+---
+
+### change value
 
 > script change value "in_stock" to 10
 
@@ -155,6 +179,10 @@ GET /products/_doc/100
 }
 
 ```
+
+---
+
+### change value use params
 
 > script use params
 
@@ -193,7 +221,9 @@ GET /products/_doc/100
 
 ```
 
-- upsert
+---
+
+## upsert
 
 > document id 101 don't exists then create the document
 
@@ -267,7 +297,9 @@ GET /products/_doc/101
 
 ```
 
-- replacing documents
+---
+
+## replacing documents
 
 > need to replacing field "tags"
 
@@ -332,15 +364,13 @@ GET /products/_doc/100
 
 ```
 
-delete document
+---
 
-run
+## delete document
 
 ```
 DELETE /products/_doc/100
 ```
-
-after
 
 ```
 // command
@@ -355,3 +385,5 @@ GET /products/_doc/100
 }
 
 ```
+
+---
