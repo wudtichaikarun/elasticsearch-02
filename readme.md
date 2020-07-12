@@ -1,5 +1,7 @@
 # Elasticsearch
 
+[GITHUB-QUERY-EXAMPLE](https://github.com/codingexplained/complete-guide-to-elasticsearch)
+
 - install and start Elasticsearch
 - install and start Kibana
 
